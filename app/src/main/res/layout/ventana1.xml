@@ -25,13 +25,14 @@
         android:layout_marginRight="12dp"
         android:layout_marginTop="55dp"
         android:background="@color/white"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_key"
         android:hint="Ingrese el código"
         android:inputType="number"
         android:paddingLeft="25dp"
         />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_buscar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,6 +40,8 @@
         android:layout_marginRight="100dp"
         android:layout_marginTop="140dp"
         android:text="Buscar"
+        android:background="@drawable/buttonshape"
+
         android:textColor="#fff"
         android:shadowColor="#2314A8"
         android:shadowDx="-3"
