@@ -25,7 +25,12 @@ public class MainActivity extends AppCompatActivity {
     boolean inputEd=false;
     boolean input1=false;
     int resultadoInsert=0;
-    Modal ventanas = new Modal();
+    FloatingActionButton ventanas;
+
+    {
+        ventanas = findViewById(R.layout.ventana1);
+    }
+
 
     ConexionSQLite conexion = new ConexionSQLite(this);
     Dto datos = new Dto();

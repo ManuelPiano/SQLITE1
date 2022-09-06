@@ -8,6 +8,11 @@
         <entry key="..\:/Users/manuel/AndroidStudioProjects/SQLITE1/app/src/main/res/layout/activity_list_view_articulos.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/manuel/AndroidStudioProjects/SQLITE1/app/src/main/res/layout/activity_main.xml" value="0.15579710144927536" />
         <entry key="..\:/Users/manuel/AndroidStudioProjects/SQLITE1/app/src/main/res/layout/ventana1.xml" value="0.4466666666666667" />
+        <entry key="app/src/main/res/layout/activity_consulta_spinner.xml" value="0.23369565217391305" />
+        <entry key="app/src/main/res/layout/activity_detalles_articulos.xml" value="0.23369565217391305" />
+        <entry key="app/src/main/res/layout/activity_list_view_articulos.xml" value="0.23369565217391305" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.23369565217391305" />
+        <entry key="app/src/main/res/layout/ventana1.xml" value="0.2578125" />
       </map>
     </option>
   </component>
