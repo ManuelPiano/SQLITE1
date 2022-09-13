@@ -39,9 +39,9 @@ public class ConexionSQLite extends SQLiteOpenHelper {
 
     }
 
-    public SQLiteDatabase bd(){
-        SQLiteDatabase bd = this.getWritableDatabase();
-        return bd;
+    public SQLiteDatabase db(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db;
     }
 
     public boolean InserTradicional(Dto datos){
@@ -53,7 +53,7 @@ public class ConexionSQLite extends SQLiteOpenHelper {
             String descripcion = datos.getDescripcion();
             double precio = datos.getPrecio();
 
-            Cursor fila = bd().rawQuery("select codigo from articulos where codigo='"+codigo+"'", null);
+            Cursor fila = db().rawQuery("select codigo from articulos where codigo='"+codigo+"'", null);
             if(fila.moveToFirst()==true){
                 estado = false;
             }else {
@@ -61,8 +61,8 @@ public class ConexionSQLite extends SQLiteOpenHelper {
                         "(codigo,descripcion,precio)/n" +
                         "VALUES /n" +
                         "('"+ String.valueOf(codigo)+"', '"+ descripcion + "', '" + String.valueOf(precio)+ "');";
-                bd().execSQL(SQL);
-                bd().close();
+                db().execSQL(SQL);
+                db().close();
                 estado = true;
             }
 
@@ -81,11 +81,11 @@ public class ConexionSQLite extends SQLiteOpenHelper {
             registro.put("descripcion", datos.getDescripcion());
             registro.put("precio", datos.getPrecio());
 
-            Cursor fila =bd().rawQuery("select codigo from articulos where codigo ='"+datos.getCodigo()+"'",null);
+            Cursor fila =db().rawQuery("select codigo from articulos where codigo ='"+datos.getCodigo()+"'",null);
                 if(fila.moveToFirst()==true){
                     estado=false;
                 }else{
-                    resultado=(int) bd().insert("articulos",null, registro);
+                    resultado=(int) db().insert("articulos",null, registro);
                     if (resultado>0)estado=true;
                     else estado = false;
                 }
@@ -107,7 +107,7 @@ public boolean InsertRegister (Dto datos){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String fecha1 = sdf.format(cal.getTime());
 
-            Cursor fila = bd().rawQuery("select codigo from articulos where codigo='"+datos.getCodigo()+"'",null);
+            Cursor fila = db().rawQuery("select codigo from articulos where codigo='"+datos.getCodigo()+"'",null);
             if (fila.moveToFirst()==true){
                 estado = false;
             }else{
@@ -115,7 +115,7 @@ public boolean InsertRegister (Dto datos){
                         "(codigo,descripcion,precio)\n" +
                         "VALUES \n" +
                         "(?,?,?);";
-                bd().execSQL(SQL, new String[]{String.valueOf(codigo),descripcion,String.valueOf(precio)});
+                db().execSQL(SQL, new String[]{String.valueOf(codigo),descripcion,String.valueOf(precio)});
                 estado = true;
             }
         }catch (Exception e){
@@ -195,7 +195,7 @@ public boolean bajaCodigo (final Context context, final Dto datos){
         estadoDelete = true;
         try {
             int codigo = datos.getCodigo();
-            Cursor fila = bd().rawQuery("select * from articulos where codigo="+codigo,null);
+            Cursor fila = db().rawQuery("select * from articulos where codigo="+codigo,null);
             if (fila.moveToFirst()){
                 datos.setCodigo(Integer.parseInt(fila.getString(0)));
                 datos.setDescripcion(fila.getString(1));
@@ -209,7 +209,7 @@ public boolean bajaCodigo (final Context context, final Dto datos){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                       int codigo = datos.getCodigo();
-                      int cant=bd().delete("articulos","codigo="+codigo,null);
+                      int cant=db().delete("articulos","codigo="+codigo,null);
                       if (cant>0){
                           estadoDelete = true;
                           Toast.makeText(context.getApplicationContext() ,"Registro eliminado satisfactoriamente", Toast.LENGTH_SHORT).show();
@@ -217,7 +217,7 @@ public boolean bajaCodigo (final Context context, final Dto datos){
                       }else{
                           estadoDelete=false;
                       }
-                      bd().close();
+                      db().close();
                     }
                 });
                 builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
