@@ -20,7 +20,7 @@ public class ListViewArticulos extends AppCompatActivity {
     ArrayList<String> list;
     ArrayAdapter adapter;
     String[] version = {"Aestro", "Blender", "Cupckake", "Donut", "Eclair", "Froyo", "GingerBread", "HoneyComb",
-            "IceCream", "JellyBean", "KitKat", "LoliPop", "Marshmellow", "Nought", "Oreo"};
+            "IceCream", "JellyBean", "KitKat", "LoliPop", "Marshmellow", "Nought", "Oreo", "Pie", "10","11","12","12L","13"};
 
     ConexionSQLite conexion = new ConexionSQLite(this);
     Dto datos = new Dto();
@@ -32,12 +32,13 @@ public class ListViewArticulos extends AppCompatActivity {
 
         listviewpersonas = findViewById(R.id.listViewPersonas);
         searchView = findViewById(R.id.searchView);
-        adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, conexion.consultaListaArticulo());
+        adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, conexion.ConsultaListaArticulos1());
         listviewpersonas.setAdapter(adaptador);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+
                 return false;
             }
 
@@ -50,13 +51,15 @@ public class ListViewArticulos extends AppCompatActivity {
         });
         listviewpersonas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                String informacion = "Codigo: "+ conexion.consultaListaArticulo().get(pos).getDescripcion()+"\n";
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long l) {
+                String informacion= "Codigo: "+ conexion.consultaListaArticulo().get(pos).getDescripcion()+"\n";
                 informacion+= "Descripción:"+conexion.consultaListaArticulo().get(pos).getDescripcion()+"\n";
+                informacion+="Precio:"+conexion.consultaListaArticulo().get(pos).getPrecio();
+
                 Dto articulos = conexion.consultaListaArticulo().get(pos);
                 Intent intent = new Intent(ListViewArticulos.this, detalles_articulos.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("articulos", articulos);
+                bundle.putSerializable("articulo", articulos);
                 intent.putExtras(bundle);
                 startActivity(intent);
 

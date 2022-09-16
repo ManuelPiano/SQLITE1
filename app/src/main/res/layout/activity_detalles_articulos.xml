@@ -157,6 +157,7 @@
                         android:textColor="@color/design_default_color_primary_dark"
                         android:textAppearance="@style/Base.CardView"
                         android:text="xxxxxx"
+                        android:textSize="14dp"
 
                         />
                     <TextView
@@ -172,6 +173,7 @@
                         android:textColor="@color/design_default_color_primary_dark"
                         android:textAppearance="@style/Base.CardView"
                         android:text="xxxxxx"
+                        android:textSize="14dp"
 
                         />
                     <TextView
@@ -189,6 +191,7 @@
                         android:textColor="@color/design_default_color_primary_dark"
                         android:textAppearance="@style/Base.CardView"
                         android:text="000.00"
+                        android:textSize="14dp"
 
                         />
                     <TextView

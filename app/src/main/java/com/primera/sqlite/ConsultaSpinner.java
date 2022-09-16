@@ -31,11 +31,11 @@ public class ConsultaSpinner extends AppCompatActivity {
 
         sp_opt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i!=0){
-                    tv_cod.setText("Codigo" + conexion.consultaListaArticulo().get(i-1).getCodigo());
-                    tv_descripcion.setText("Descripcion:"+conexion.consultaListaArticulo().get(i-1).getDescripcion());
-                    tv_precio.setText("precio:"+String.valueOf(conexion.consultaListaArticulo().get(i-1).getPrecio()));
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                if (position!=0){
+                    tv_cod.setText("Codigo" + conexion.consultaListaArticulo().get(position-1).getCodigo());
+                    tv_descripcion.setText("Descripcion:"+conexion.consultaListaArticulo().get(position-1).getDescripcion());
+                    tv_precio.setText("precio:"+String.valueOf(conexion.consultaListaArticulo().get(position-1).getPrecio()));
                 }else{
                     tv_cod.setText("Código:");
                     tv_descripcion.setText("Descripcion");

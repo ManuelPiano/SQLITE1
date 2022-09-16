@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.animation.Animator;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -16,6 +20,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -92,11 +101,13 @@ public class MainActivity extends AppCompatActivity {
         btn_consultar1=findViewById(R.id.btn_consultar1);
         btn_consultar2=findViewById(R.id.btn_consultar2);
         btn_eliminar = findViewById(R.id.btn_eliminar);
+        btn_actualizar = findViewById(R.id.btn_actualizar);
 
         String senal = "";
         String codigo = "";
         String descripcion = "";
         String precio = "";
+
         try {
             Intent intent = getIntent();
             Bundle bundle = intent.getExtras();
@@ -140,6 +151,37 @@ public class MainActivity extends AppCompatActivity {
         dialogo.show();
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        int id =item.getItemId();
+        if (id==R.id.action_limpiar){
+            et_codigo.setText(null);
+            et_descripcion.setText(null);
+            et_precio.setText(null);
+            return true;
+        }else if (id==R.id.action_listaArticulos){
+            Intent spinnerActivity = new Intent(MainActivity.this, ConsultaSpinner.class);
+            startActivity(spinnerActivity);
+            return true;
+        }else if (id==R.id.action_listaArticulos1){
+            Intent listViewActivity = new Intent(MainActivity.this, ListViewArticulos.class);
+            startActivity(listViewActivity);
+            return true;
+        }else if (id==R.id.recyclerView){
+            Intent recycler = new Intent(MainActivity.this,consulta_recyclerView.class);
+            startActivity(recycler);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
     public void alta (View view){
         if (et_codigo.getText().toString().length()==0){
             et_codigo.setError("Campo obligatorio");
@@ -160,10 +202,13 @@ public class MainActivity extends AppCompatActivity {
             input1=true;
         }
         if (inputET && inputEd && input1){
+
             try {
                 datos.setCodigo(Integer.parseInt(et_codigo.getText().toString()));
                 datos.setDescripcion(et_descripcion.getText().toString());
                 datos.setPrecio(Double.parseDouble(et_precio.getText().toString()));
+
+
                 if (conexion.InserTradicional(datos)){
                     Toast.makeText(this, "Registro Agregado satisfactoriamente", Toast.LENGTH_SHORT).show();
                     limpiarDatos();
@@ -199,7 +244,8 @@ public class MainActivity extends AppCompatActivity {
             String Codigo = et_codigo.getText().toString();
             datos.setCodigo(Integer.parseInt(Codigo));
             if (conexion.consultaArticulos(datos)){
-                et_descripcion.setText(""+datos.getPrecio());
+                et_descripcion.setText(""+datos.getDescripcion());
+                et_precio.setText(""+datos.getPrecio());
             }else{
                 Toast.makeText(this, "No existe un articulo con dicho codigo.",Toast.LENGTH_SHORT).show();
                 limpiarDatos();
@@ -270,4 +316,30 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    public static boolean copyFile(String from, String to) {
+
+        boolean result = false;
+        try{
+            File dir = new File(to.substring(0, to.lastIndexOf('/')));
+            dir.mkdirs();
+            File tof = new File(dir, to.substring(to.lastIndexOf('/') + 1));
+            int byteread;
+            File oldfile = new File(from);
+            if(oldfile.exists()){
+                InputStream inStream = new FileInputStream(from);
+                FileOutputStream fs = new FileOutputStream(tof);
+                byte[] buffer = new byte[1024];
+                while((byteread = inStream.read(buffer)) != -1){
+                    fs.write(buffer, 0, byteread);
+                }
+                inStream.close();
+                fs.close();
+            }
+            result = true;
+        }catch (Exception e){
+            Log.e("copyFile", "Error copiando archivo: " + e.getMessage());
+        }
+        return result;
+    }
+
 }
